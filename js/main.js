@@ -1,11 +1,15 @@
 /* Настройки сайта - здесь можно менять контакты, не трогая остальной код */
 var SITE = {
-  telegram: "Sofa_Pritula",          // ник в Telegram без @
+  maxLink: "https://max.ru/",        // ВСТАВЬТЕ ссылку на профиль в MAX: Настройки MAX -> Профиль -> Поделиться ссылкой (вид https://max.ru/u/...)
   phone: "+79650514787",
-  sendUrl: "send.php"                 // серверный обработчик формы (нужен PHP-хостинг). На хостинге без PHP форма откроет Telegram с готовым текстом
+  email: "Sofya.ternikova@yandex.ru",
+  sendUrl: "send.php"                 // серверный обработчик формы (нужен PHP-хостинг). На хостинге без PHP форма откроет почтовую программу с готовым письмом
 };
 
 (function () {
+  // подставляем ссылку на MAX во все кнопки
+  document.querySelectorAll("[data-max]").forEach(function (a) { a.href = SITE.maxLink; });
+
   // мобильное меню
   var burger = document.getElementById("burger"), menu = document.getElementById("menu");
   if (burger && menu) {
@@ -52,9 +56,9 @@ var SITE = {
       ok.style.display = "block";
     }
     function fallback() {
-      // хостинг без PHP: открываем Telegram с готовым текстом заявки
-      var text = "Заявка с сайта\nИмя: " + name + "\nТелефон: " + form.phone.value + (msg ? "\nВопрос: " + msg : "");
-      window.open("https://t.me/" + SITE.telegram + "?text=" + encodeURIComponent(text), "_blank");
+      // хостинг без PHP: открываем почтовую программу с готовым письмом
+      var text = "Имя: " + name + "\nТелефон: " + form.phone.value + (msg ? "\nВопрос: " + msg : "") + "\nСогласие на обработку ПДн: да, " + new Date().toLocaleString("ru-RU");
+      location.href = "mailto:" + SITE.email + "?subject=" + encodeURIComponent("Заявка с сайта") + "&body=" + encodeURIComponent(text);
       done();
     }
 
