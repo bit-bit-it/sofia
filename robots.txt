@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /send.php
+Disallow: /data/
+Sitemap: https://sofia-pritula.ru/sitemap.xml

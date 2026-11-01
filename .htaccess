@@ -1,0 +1,8 @@
+# Переадресация на HTTPS (если хостинг выдал SSL-сертификат)
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# Красивые адреса: /policy вместо /policy.html
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([^.]+)$ $1.html [L]
+ErrorDocument 404 /index.html
